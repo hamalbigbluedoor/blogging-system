@@ -30,8 +30,10 @@
                     <div class="col-xs-9 text-right">
 
                     <?php
+                    // Select all posts data
                     $query = "SELECT * FROM posts";
                     $select_all_posts = mysqli_query($connection, $query);
+                    // Count all the post numbers of rows in the database
                     $post_count = mysqli_num_rows($select_all_posts);
 
                     echo "<div class='huge'>{$post_count}</div>";
@@ -125,7 +127,6 @@ $sub_user_count = mysqli_num_rows($select_all_sub_users);
 ?>
 
 <div class="row">
-
 <script type="text/javascript">
   google.charts.load('current', {'packages':['bar']});
   google.charts.setOnLoadCallback(drawChart);
@@ -133,11 +134,11 @@ $sub_user_count = mysqli_num_rows($select_all_sub_users);
     var data = google.visualization.arrayToDataTable([['Data', 'Count'],
 
       <?php
+      // First array - each item is static text
+      // Second array - each item is a number from the dynamic variables 
       $element_text = ['Total Posts', 'Draft Posts', 'Total Users', 'Subscribers', 'Categories'];
       $element_count = [$post_count, $post_draft_count, $user_count, $sub_user_count, $categories_count];
-
-      // Prints first array = each item is static text 
-      // Prints second array = each item is a number from the dynamic variables   
+  
       // The $i goes into the array and checks out each value in there and echo's it 
       for ($i = 0; $i < 5; $i++) {
         echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
@@ -155,7 +156,6 @@ $sub_user_count = mysqli_num_rows($select_all_sub_users);
     var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
     chart.draw(data, google.charts.Bar.convertOptions(options));
   }
-
 </script>
                    
                    
