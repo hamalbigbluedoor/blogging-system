@@ -2,6 +2,9 @@
 
 <!-- We make this page submit to the search.php page -->
 
+
+<a href="../registration.php">Registration</a>
+
 <!-- Blog Search Well -->
 <div class="well">
 	<h4>Blog Search</h4>

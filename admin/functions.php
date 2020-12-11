@@ -180,6 +180,8 @@ function add_post() {
 
 		$create_post_query = mysqli_query($connection, $query);
 		confirmQuery($create_post_query);
+
+		echo "Post Created: " . " " . "<a href='posts.php'>View Posts</a><br/>";
 	}
 }
 
@@ -203,6 +205,7 @@ function create_user() {
 	  $query .= "VALUES('{$user_firstname}','{$user_lastname}','{$user_role}','{$username}','{$user_email}','{$user_password}') "; 
 	  $create_user_query = mysqli_query($connection, $query);  
 	  confirmQuery($create_user_query);
+		echo "User Created: " . " " . "<a href='users.php'>View Users</a><br/>";
 	}
 }
 

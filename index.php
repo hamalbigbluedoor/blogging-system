@@ -25,6 +25,9 @@ while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
   $post_image = $row['post_image'];
   // Function truncates content to 255 characters
   $post_content = substr($row['post_content'], 0, 255) . " ...";
+  $post_status = $row['post_status'];
+
+  if($post_status == 'published') {
   // We close PHP tag here so we dont need to echo out the whole HTML string
   // The loop is still open 
 ?>
@@ -51,7 +54,8 @@ while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
 
     <hr>
 <?php 
-} 
+  } 
+}
 ?>
 
 </div>
