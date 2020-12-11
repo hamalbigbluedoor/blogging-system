@@ -36,7 +36,7 @@
 
                     echo "<div class='huge'>{$post_count}</div>";
                     ?>
-                        <div>Posts</div>
+                        <div>Total Posts</div>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     echo "<div class='huge'>{$user_count}</div>";
 
                     ?>
-                        <div> Users</div>
+                        <div>Total Users</div>
                     </div>
                 </div>
             </div>
@@ -112,22 +112,34 @@
 </div>
 <!-- /.row -->
 
+<?php
+
+$query = "SELECT * FROM posts WHERE post_status = 'draft' ";
+$select_all_draft_posts = mysqli_query($connection, $query);
+$post_draft_count = mysqli_num_rows($select_all_draft_posts);
+
+$query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
+$select_all_sub_users = mysqli_query($connection, $query);
+$sub_user_count = mysqli_num_rows($select_all_sub_users);
+
+?>
+
 <div class="row">
 
 <script type="text/javascript">
   google.charts.load('current', {'packages':['bar']});
-
-
-
   google.charts.setOnLoadCallback(drawChart);
   function drawChart() {
     var data = google.visualization.arrayToDataTable([['Data', 'Count'],
 
       <?php
-      $element_text = ['All Posts', 'Users', 'Categories'];
-      $element_count = [$post_count, $user_count, $categories_count];
+      $element_text = ['Total Posts', 'Draft Posts', 'Total Users', 'Subscribers', 'Categories'];
+      $element_count = [$post_count, $post_draft_count, $user_count, $sub_user_count, $categories_count];
 
-      for ($i = 0; $i < 3; $i++) {
+      // Prints first array = each item is static text 
+      // Prints second array = each item is a number from the dynamic variables   
+      // The $i goes into the array and checks out each value in there and echo's it 
+      for ($i = 0; $i < 5; $i++) {
         echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
       }
       ?>
@@ -147,7 +159,7 @@
 </script>
                    
                    
-  <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+<div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
 </div>
 
 </div>
