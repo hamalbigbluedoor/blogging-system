@@ -57,7 +57,7 @@ function find_all_categories() {
 		echo "<tr>";
   	echo "<td>$cat_id</td>";
   	echo "<td>$cat_title</td>";
-  	echo "<td><a href='categories.php?delete=$cat_id'>Delete</a></td>";
+  	echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \" href='categories.php?delete=$cat_id'>Delete</a></td>";
 		// ?edit= makes a key in the array $_GET & $cat_id is the value
   	echo "<td><a href='categories.php?edit=$cat_id'>Edit</a></td>";
 		echo "</tr>";
@@ -124,7 +124,7 @@ function read_all_posts() {
 			// We pass two parameters with the '&' - 'edit_post' page and the specific posts id 'p_id'
 			echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 			// The 'delete' is the key we use in the $_GET
-			echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+			echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \"  href='posts.php?delete={$post_id}'>Delete</a></td>";
 		echo "</tr>";
 	}
 }
@@ -241,7 +241,7 @@ function read_all_users() {
 		* We recieve the parameter from the get request via the url
 		*/
 	  echo "<td><a href='users.php?source=edit_user&edit_user=$user_id'>Edit</a></td>";
-	  echo "<td><a href='users.php?delete=$user_id'>Delete</a></td>";
+	  echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \" href='users.php?delete=$user_id'>Delete</a></td>";
 	  echo "</tr>";
 	}
 }

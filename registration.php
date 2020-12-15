@@ -1,37 +1,39 @@
 <?php  include "includes/header.php"; ?>
 <?php  include "includes/db.php"; ?>
-
+<?php  include "admin/functions.php"; ?>
 
 <?php
-
+// Check if 'submit' value is set in the form 
 if (isset($_POST['submit'])) {
+  // keys come in from the form fields
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-	// Ensure info from users doesn't have sql injection in it
-  $username = mysqli_real_escape_string($connection, $username);
-  $email = mysqli_real_escape_string($connection, $email);
-  $password = mysqli_real_escape_string($connection, $password);
+  if (!empty($username) && !empty($email) && !empty($password)) {
+  	// Ensure info from users doesn't have sql injection in it
+    $username = mysqli_real_escape_string($connection, $username);
+    $email = mysqli_real_escape_string($connection, $email);
+    $password = mysqli_real_escape_string($connection, $password);
+    
 
-  // Select from randSalt column
-	$query = "SELECT randSalt FROM users";
-	$select_randsalt_query = mysqli_query($connection, $query);
 
-	if (!$select_randsalt_query) {
-		die ("QUERY FAILED" . mysqli_error($connection));
-	}
+    // Add new user into the database from the registration form
+    $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
+    // The new user will be a 'subscriber' by default
+    $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber' )";
+    $register_user_query = mysqli_query($connection, $query);
 
-	$row = mysqli_fetch_array($select_randsalt_query);
-	$salt = $row['randSalt'];
-
-  $query = "INSERT INTO users (username, email, user_password, user_role) ";
-  $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber' )";
-  $register_user_query = mysqli_query($connection, $query);
-  if (!$register_user_query) {
-    die ("QUERY FAILED" . mysqli_error($connection));
+    confirmQuery($register_user_query);
+    // If all fields are correctly populated when clicking on submit button
+    $message = "Your Registration has been submitted";
+  } else {
+    // If fields are left empty when clicking on submit button
+    $message = "Fields cannot be empty";
   }
-  
+} else {
+  // So we dont get an undefined variable notice
+  $message = '';
 }
 
 ?>
@@ -48,20 +50,21 @@ if (isset($_POST['submit'])) {
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
-                        </div>
-                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
-                        </div>
-                         <div class="form-group">
-                            <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password">
-                        </div>
-                
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                      <h6 class="text-center"><?php echo $message; ?></h6>
+                      <div class="form-group">
+                          <label for="username" class="sr-only">username</label>
+                          <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                      </div>
+                       <div class="form-group">
+                          <label for="email" class="sr-only">Email</label>
+                          <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                      </div>
+                       <div class="form-group">
+                          <label for="password" class="sr-only">Password</label>
+                          <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                      </div>
+              
+                      <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
